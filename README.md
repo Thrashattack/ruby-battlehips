@@ -1,5 +1,7 @@
 # Ruby Battleship 
 
+![image](https://github.com/Thrashattack/ruby-battleships/assets/23486776/e59f012d-f675-4b72-b25f-899b8aef72db)
+
 - Classic battleship game implemented in ruby with STDIO player interaction.
 - By default, 7 ships of sizes 1, 1, 2, 2, 3, 4, 5 respectively, will be randomly placed within a 10x10 board.
 - You will be given 50 shoots and must fire at their coordinates by inputing the x and y values each turn.
