@@ -12,7 +12,7 @@ class Cell
     @x = coordinate_x
     @y = coordinate_y
     @value = value
-    @has_ship = false
+    @ship = false
     @was_hitted = false
     @is_hidden = true
   end
@@ -27,14 +27,21 @@ class Cell
     end
   end
 
-  def assign(value)
-    @has_ship = true
-    @value = value
+  def assign(ship)
+    @ship = ship
+    @value = ship.size
   end
 
-  def hit
+  def hit_a_ship?
     @is_hidden = false
-    @was_hitted = true if @has_ship
+
+    return false unless @ship
+
+    return false unless @ship.hit?
+
+    @was_hitted = true
+
+    true
   end
 
   def to_s

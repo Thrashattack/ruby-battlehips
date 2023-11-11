@@ -7,21 +7,15 @@ class Ship
   def initialize(
     size: 1,
     is_vertical: [false, true].sample,
-    damage: 0,
-    cells: []
+    damage: 0
   )
     @size = size
     @is_vertical = is_vertical
     @damage = damage
-    @cells = cells
   end
 
   def vertical?
     @is_vertical
-  end
-
-  def add_cell(cell)
-    @cells.push(cell)
   end
 
   def sank?

@@ -19,16 +19,16 @@ class Game
     @ships = ships
     @debug = debug
     @log = log
-    @board = Board.new(size:)
   end
 
   def setup
+    @board = Board.new(size: @size)
     @board.fill
 
     @ships.each do |ship|
-      @board.place(ship)
+      cells = @board.place(ship)
 
-      @log.logger.debug(ship.to_s) if @debug
+      @log.logger.debug(cells.map(&:to_s)) if @debug
     end
 
     self
@@ -55,18 +55,13 @@ class Game
   end
 
   def run_turn
-    decrease_shoots
-
     cell = @board.at(*ask_player_input)
-    cell.hit
 
-    @ships.map do |ship|
-      next unless ship.cells.include?(cell) && ship.hit?
+    return print_hit(cell) if cell.hit_a_ship?
 
-      return print_hit cell
-    end
+    print_missed(cell)
 
-    print_missed cell
+    decrease_shoots
   end
 
   def decrease_shoots
@@ -113,9 +108,6 @@ class Game
   end
 
   def game_over
-    @board.reveal
-    @log.print(msg: @board)
-
     if all_ships_sank?
       @log.print(msg: 'Congrats! You win! :D', type: :info)
       @log.logger.info('Winner')
@@ -123,5 +115,8 @@ class Game
       @log.print(msg: 'You lose! More lucky next time! :(', type: :error)
       @log.logger.fatal('Loser')
     end
+
+    @board.reveal
+    @log.print(msg: @board)
   end
 end

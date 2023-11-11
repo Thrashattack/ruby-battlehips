@@ -4,15 +4,15 @@ require('./cell')
 
 # Board class
 class Board
-  attr_reader :board_size, :board
+  attr_reader :board_size, :cells
 
-  def initialize(size: 10, board: [])
+  def initialize(size: 10, cells: [])
     @board_size = size
-    @board = board
+    @cells = cells
   end
 
   def at(coordinate_x, coordinate_y)
-    @board[coordinate_x][coordinate_y]
+    @cells[coordinate_x][coordinate_y]
   end
 
   def to_s
@@ -20,7 +20,7 @@ class Board
     @board_size.times do |i|
       row = ''
       @board_size.times do |j|
-        row += @board[i][j].print_cell_content
+        row += @cells[i][j].print_cell_content
       end
       string += "#{row}\n"
     end
@@ -30,25 +30,29 @@ class Board
 
   def fill
     @board_size.times do |i|
-      @board[i] = []
+      @cells[i] = []
       @board_size.times do |j|
-        @board[i][j] = Cell.new(coordinate_x: i, coordinate_y: j, value: false)
+        @cells[i][j] = Cell.new(coordinate_x: i, coordinate_y: j, value: false)
       end
     end
   end
 
   def place(ship)
+    cells = []
+
     (x, y) = generate_random_coordinates(ship)
 
     ship.size.times do |offset|
-      place_at(offset, x, y, ship)
+      cells << place_at(offset, x, y, ship)
     end
+
+    cells
   end
 
   def reveal
     @board_size.times do |x|
       @board_size.times do |y|
-        @board[x][y].hit if @board[x][y].value
+        @cells[x][y].hit_a_ship? if @cells[x][y].value
       end
     end
   end
@@ -72,11 +76,11 @@ class Board
       coordinate_x += offset
     end
 
-    cell = @board[coordinate_x][coordinate_y]
+    cell = @cells[coordinate_x][coordinate_y]
 
-    cell.assign(ship.size)
+    cell.assign(ship)
 
-    ship.add_cell(cell)
+    cell
   end
 
   def collision?(ship_size, coordinate_x, coordinate_y, is_vertical)
@@ -84,7 +88,7 @@ class Board
       x = is_vertical ? coordinate_x : coordinate_x + offset
       y = is_vertical ? coordinate_y + offset : coordinate_y
 
-      return true if @board[x][y].value
+      return true if @cells[x][y].value
     end
 
     false
