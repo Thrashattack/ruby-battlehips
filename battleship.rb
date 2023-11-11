@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-require('./game')
+require('./app/game')
 
-size = ARGV[0].to_i.positive? ? ARGV[0].to_i : 10
+require('./core/board')
+require('./core/ship')
+require('./core/cell')
 
-shoots = ARGV[0].to_i.positive? ? ARGV[1].to_i : 50
+require('./utils/game_log')
+require('./utils/errors')
+require('./utils/parse_args')
 
-debug = ARGV[2] == 'true' || false
+(size, shoots, debug) = Utils::Parse.args
 
-Game.new(size:, shoots:, debug:).setup.play
+App::Game.new(size:, shoots:, debug:).setup.play
