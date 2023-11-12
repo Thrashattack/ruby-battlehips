@@ -13,15 +13,14 @@ module Core
       @x = coordinate_x
       @y = coordinate_y
       @value = value
-      @ship = false
-      @was_hitted = false
+      @ship = nil
       @is_hidden = true
     end
 
     def print_cell_content
       return print_hidden if @is_hidden
 
-      if @was_hitted
+      if @value
         print_hits
       else
         print_missed
@@ -36,11 +35,7 @@ module Core
     def hit_a_ship?
       @is_hidden = false
 
-      return false unless @ship
-
-      return false unless @ship.hit?
-
-      @was_hitted = true
+      return false unless @ship&.hit?
 
       true
     end
@@ -56,7 +51,7 @@ module Core
     end
 
     def print_hits
-      "\e[1;31m| \e[1;32m#{@value} "
+      "\e[1;31m| \e[1;32m#{@value >= 10 ? @value : "#{@value} "}"
     end
 
     def print_missed
