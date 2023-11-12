@@ -3,7 +3,7 @@
 module App
   # Game Class
   class Game < App::IO::STDIO
-    attr_reader :board, :size, :shoots
+    attr_reader :board, :size, :shoots, :score
 
     def initialize(size: 10,
                    shoots: 50,
@@ -12,6 +12,7 @@ module App
       @size = size
       @shoots = shoots
       @debug = debug
+      @score = 0
     end
 
     def setup
@@ -78,13 +79,14 @@ module App
       cell = @board.at(*ask_player_input)
 
       if cell.hit_a_ship?
+        @score += 100 / cell.value
         print_hit(cell)
       else
         print_missed(cell)
       end
 
       @shoots -= 1
-      shoots_info
+      score_info
     end
   end
 end

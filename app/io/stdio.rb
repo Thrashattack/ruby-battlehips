@@ -9,9 +9,11 @@ module App
         @log = App::IO::Loggers::DefaultLogger.new
       end
 
-      def shoots_info
-        @log.print(msg: "Remaining shoots: #{@game.shoots}\n\n", type: :warn)
+      def score_info
+        @log.print(msg: "Remaining shoots: #{@game.shoots}", type: :warn)
+        @log.print(msg: "Score: #{@game.score}\n\n", type: :info)
         @log.logger.warn("Remaining shoots: #{@game.shoots}")
+        @log.logger.info("Score: #{@game.shoots}")
       end
 
       def log_cells(cells)
