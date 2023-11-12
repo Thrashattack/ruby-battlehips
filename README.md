@@ -1,3 +1,7 @@
+
+![Screenshot 2023-11-12 at 22 17 10](https://github.com/Thrashattack/ruby-battleships/assets/23486776/6948b51f-8605-4198-9377-59be448473fa)
+![Screenshot 2023-11-12 at 22 16 21](https://github.com/Thrashattack/ruby-battleships/assets/23486776/dd294817-8274-419a-b4b8-b4d8901ee4c5)
+
 # Ruby Battleship 
 
 - Classic battleship game implemented in ruby with STDIO player interaction.
