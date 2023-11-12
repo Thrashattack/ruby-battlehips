@@ -19,7 +19,7 @@ module Core
       @board_size.times do |i|
         row = ''
         @board_size.times do |j|
-          row += @cells[i][j].print_cell_content
+          row += board_cell_content(i, j)
         end
         string += "#{row}\n"
       end
@@ -57,6 +57,25 @@ module Core
     end
 
     private
+
+    def board_cell_content(index, jindex)
+      string = ''
+      string += header_coordinates if index.zero? && jindex.zero?
+      string += side_coordinates(index) if jindex.zero?
+      string += @cells[index][jindex].print_cell_content
+
+      string
+    end
+
+    def header_coordinates
+      "     \e[36m#{(1...@board_size + 1).map do |index|
+                      index >= 10 ? index.to_s : "#{index} "
+                    end.join('| ')}\n"
+    end
+
+    def side_coordinates(index)
+      " \e[36m#{index + 1 >= 10 ? index + 1 : "#{index + 1} "}"
+    end
 
     def generate_random_coordinates(ship)
       loop do
