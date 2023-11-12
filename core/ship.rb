@@ -20,7 +20,7 @@ module Core
     end
 
     def sank?
-      @size == @damage
+      @damage == @size
     end
 
     def hit?
@@ -29,16 +29,6 @@ module Core
       @damage += 1
 
       true
-    end
-
-    def to_s
-      string = ''
-
-      cells.each do |cell|
-        string += "#{cell}, "
-      end
-
-      string
     end
   end
 end
