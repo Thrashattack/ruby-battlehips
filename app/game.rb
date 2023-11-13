@@ -27,14 +27,14 @@ module App
 
     def play
       loop do
-        break if no_more_shoots? || all_ships_sank?
+        break if @shoots.zero? || @ships.map(&:sank?).all?
 
         run_turn
       end
 
-      winner = all_ships_sank?
+      is_winner = @ships.map(&:sank?).all?
       @board.reveal
-      game_over(winner:)
+      game_over(is_winner:)
     end
 
     private
@@ -65,14 +65,6 @@ module App
       end
 
       @ships
-    end
-
-    def no_more_shoots?
-      !@shoots.positive?
-    end
-
-    def all_ships_sank?
-      @ships.map(&:sank?).all?
     end
 
     def run_turn
