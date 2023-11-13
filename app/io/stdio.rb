@@ -13,7 +13,7 @@ module App
         @log.print(msg: "Remaining shoots: #{@game.shoots}", type: :warn)
         @log.print(msg: "Score: #{@game.score}\n\n", type: :info)
         @log.logger.warn("Remaining shoots: #{@game.shoots}")
-        @log.logger.info("Score: #{@game.shoots}")
+        @log.logger.info("Score: #{@game.score}")
       end
 
       def log_cells(cells)
@@ -55,8 +55,8 @@ module App
         @log.print(msg: 'You missed!', type: :error)
       end
 
-      def game_over(winner: false)
-        if winner
+      def game_over(is_winner: false)
+        if is_winner
           @log.print(msg: 'Congrats! You win! :D', type: :info)
           @log.logger.info('Winner')
         else
